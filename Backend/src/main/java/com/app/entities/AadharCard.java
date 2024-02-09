@@ -1,11 +1,15 @@
 package com.app.entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -23,7 +27,6 @@ import lombok.ToString;
 @Table(name="aadhar_card")
 @ToString(callSuper = true, exclude = {"citizen"})
 public class AadharCard extends BaseEntity {
-	
 	@Column(length=20)
 	private String firstName;
 	@Column(length=20)
@@ -40,7 +43,8 @@ public class AadharCard extends BaseEntity {
 	private String city;
 	@Column(length = 6, name = "pin_code")
 	private String pinCode;
-	
 	@OneToOne(mappedBy = "aadharCard")
-	private Citizen citizen;	
+	private Citizen citizen;
+	@OneToMany(mappedBy="aadharCard",cascade=CascadeType.ALL)
+	private List<VaccinationRecord> vaccinationRecordList=new ArrayList<>();
 }

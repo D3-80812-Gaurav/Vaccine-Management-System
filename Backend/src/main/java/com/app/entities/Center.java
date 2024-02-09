@@ -3,6 +3,7 @@ package com.app.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -27,6 +28,8 @@ public class Center extends BaseEntity{
 	private int stock;
 	@Column(length=20)
 	private String password;
-	@OneToMany(mappedBy = "center")
+	@OneToMany(mappedBy = "center", cascade = CascadeType.ALL)
 	private  List<Booking> bookingList=new ArrayList<>();
+	@OneToMany(mappedBy="center",cascade=CascadeType.ALL)
+	private List<VaccinationRecord> vaccinationRecordList=new ArrayList<>();
 }

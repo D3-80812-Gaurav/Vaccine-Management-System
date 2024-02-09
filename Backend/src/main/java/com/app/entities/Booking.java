@@ -21,7 +21,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString(callSuper=true)
 public class Booking extends BaseEntity{
-	
 	@ManyToOne
 	@JoinColumn(name="citizen_id")
 	private Citizen citizen;
