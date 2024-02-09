@@ -2,6 +2,7 @@ package com.app.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@Table(name="admins")
 public class Admin extends BaseEntity{
 	@Column(length=20)
 	private String name;

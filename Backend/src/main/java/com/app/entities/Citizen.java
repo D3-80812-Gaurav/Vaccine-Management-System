@@ -3,6 +3,7 @@ package com.app.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -27,6 +28,6 @@ public class Citizen extends BaseEntity{
 	private String phoneNo;
 	@Column(length=20)
 	private String password;
-	@OneToMany(mappedBy = "citizen")
+	@OneToMany(mappedBy = "citizen",cascade = CascadeType.ALL,orphanRemoval=true)
 	private  List<Booking> bookingList=new ArrayList<>();
 }

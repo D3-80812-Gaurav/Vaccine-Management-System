@@ -20,11 +20,10 @@ import lombok.Setter;
 import lombok.ToString;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name="aadhar_card")
+@Table(name="aadhar_cards")
 @ToString(callSuper = true, exclude = {"citizen"})
 public class AadharCard extends BaseEntity {
 	@Column(length=20)
@@ -45,6 +44,18 @@ public class AadharCard extends BaseEntity {
 	private String pinCode;
 	@OneToOne(mappedBy = "aadharCard")
 	private Citizen citizen;
-	@OneToMany(mappedBy="aadharCard",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="aadharCard",cascade=CascadeType.ALL,orphanRemoval=true)
 	private List<VaccinationRecord> vaccinationRecordList=new ArrayList<>();
+	public AadharCard(String firstName, String lastName, LocalDate dob, Gender gender, String state, String district,
+			String city, String pinCode) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.dob = dob;
+		this.gender = gender;
+		this.state = state;
+		this.district = district;
+		this.city = city;
+		this.pinCode = pinCode;
+	}
 }

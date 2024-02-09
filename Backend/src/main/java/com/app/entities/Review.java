@@ -24,6 +24,6 @@ public class Review extends BaseEntity{
 	private int rating;
 	@Column(length=100)
 	private String comment;
-	@OneToMany(mappedBy="review",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="review",cascade = CascadeType.ALL,orphanRemoval=true)
 	private List<VaccinationRecord> vaccinationRecordList=new ArrayList<>();
 }

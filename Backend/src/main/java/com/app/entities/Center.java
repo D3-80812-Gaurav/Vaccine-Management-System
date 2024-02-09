@@ -28,8 +28,8 @@ public class Center extends BaseEntity{
 	private int stock;
 	@Column(length=20)
 	private String password;
-	@OneToMany(mappedBy = "center", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "center", cascade = CascadeType.ALL,orphanRemoval=true)
 	private  List<Booking> bookingList=new ArrayList<>();
-	@OneToMany(mappedBy="center",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="center",cascade=CascadeType.ALL,orphanRemoval=true)
 	private List<VaccinationRecord> vaccinationRecordList=new ArrayList<>();
 }
