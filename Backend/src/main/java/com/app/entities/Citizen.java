@@ -16,18 +16,25 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Table(name="citizens")
+@Table(name = "citizens")
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Citizen extends BaseEntity{
+public class Citizen extends BaseEntity {
 	@OneToOne
-	@JoinColumn(name="aadhar_id")
+	@JoinColumn(name = "aadhar_id")
 	private AadharCard aadharCard;
-	@Column(length=10)
+	@Column(length = 10)
 	private String phoneNo;
-	@Column(length=20)
+	@Column(length = 255)
 	private String password;
-	@OneToMany(mappedBy = "citizen",cascade = CascadeType.ALL,orphanRemoval=true)
-	private  List<Booking> bookingList=new ArrayList<>();
+	@OneToMany(mappedBy = "citizen", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Booking> bookingList = new ArrayList<>();
+
+	public Citizen(AadharCard aadharCard, String phoneNo, String password) {
+		super();
+		this.aadharCard = aadharCard;
+		this.phoneNo = phoneNo;
+		this.password = password;
+	}
 }

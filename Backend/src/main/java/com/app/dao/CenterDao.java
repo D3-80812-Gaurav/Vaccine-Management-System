@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.app.entities.Center;
 
-public interface CenterDao extends JpaRepository<Center,Long>{
-
+public interface CenterDao extends JpaRepository<Center, Long> {
+	public Center save(Center center);
 }

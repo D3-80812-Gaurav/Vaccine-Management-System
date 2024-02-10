@@ -14,10 +14,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="admins")
-public class Admin extends BaseEntity{
-	@Column(length=20)
+@Table(name = "admins")
+public class Admin extends BaseEntity {
+	@Column(length = 20)
 	private String name;
-	@Column(length=20)
+	@Column(length = 20)
 	private String password;
 }

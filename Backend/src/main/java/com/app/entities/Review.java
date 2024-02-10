@@ -19,11 +19,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="reviews")
-public class Review extends BaseEntity{
+@Table(name = "reviews")
+public class Review extends BaseEntity {
 	private int rating;
-	@Column(length=100)
+	@Column(length = 100)
 	private String comment;
-	@OneToMany(mappedBy="review",cascade = CascadeType.ALL,orphanRemoval=true)
-	private List<VaccinationRecord> vaccinationRecordList=new ArrayList<>();
+	@OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<VaccinationRecord> vaccinationRecordList = new ArrayList<>();
 }

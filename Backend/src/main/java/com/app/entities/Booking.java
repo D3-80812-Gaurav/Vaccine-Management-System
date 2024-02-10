@@ -14,18 +14,18 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name="bookings")
+@Table(name = "bookings")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper=true)
-public class Booking extends BaseEntity{
+@ToString(callSuper = true)
+public class Booking extends BaseEntity {
 	@ManyToOne
-	@JoinColumn(name="citizen_id")
+	@JoinColumn(name = "citizen_id")
 	private Citizen citizen;
 	@ManyToOne
-	@JoinColumn(name="center_id")
+	@JoinColumn(name = "center_id")
 	private Center center;
 	private LocalDate date;
 }

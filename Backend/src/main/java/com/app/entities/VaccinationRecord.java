@@ -15,15 +15,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="vaccination_records")
-public class VaccinationRecord extends BaseEntity{
+@Table(name = "vaccination_records")
+public class VaccinationRecord extends BaseEntity {
 	@ManyToOne
-	@JoinColumn(name="center_id")
+	@JoinColumn(name = "center_id")
 	private Center center;
 	@ManyToOne
-	@JoinColumn(name="review_id")
+	@JoinColumn(name = "review_id")
 	private Review review;
 	@ManyToOne
-	@JoinColumn(name="addhar_id")
+	@JoinColumn(name = "addhar_id")
 	private AadharCard aadharCard;
 }
