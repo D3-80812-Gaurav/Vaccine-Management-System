@@ -24,19 +24,13 @@ public class CitizenDaoTest {
 
 	@Test
 	public void addCitizens() {
-		Random random = new Random();
 		Faker faker = new Faker(new Locale("en-IND"));
-//		for (Long i = 0L; i < 50; i++) {
-//			AadharCard aadhar = new AadharCard((Long) (i + 1));
-//			long phoneNumber = random.nextLong(1_000_000_000L, 9_999_999_999L);
-//	        String formattedNumber = String.format("%010d", phoneNumber);
-//			Citizen citizen = new Citizen(aadhar,formattedNumber,faker.cat().name());
-//			dao.save(citizen);
-//		}
-		AadharCard aadhar = new AadharCard((51L));
-		long phoneNumber = random.nextLong(1_000_000_000L, 9_999_999_999L);
-		String formattedNumber = String.format("%010d", phoneNumber);
-		Citizen citizen = new Citizen(aadhar, formattedNumber, faker.cat().name());
-		dao.save(citizen);
+		for (Long i = 0L; i < 50; i++) {
+			AadharCard aadhar = new AadharCard((Long) (i + 1));
+			long phoneNumber = 9000000000L;
+			String formattedNumber = String.format("%010d", phoneNumber+i);
+			Citizen citizen = new Citizen(aadhar, formattedNumber, faker.cat().name());
+			dao.save(citizen);
+		}
 	}
 }
