@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import com.app.entities.AadharCard;
 import com.app.entities.Booking;
 import java.util.Optional;
+import com.app.entities.Center;
+import java.util.List;
 
 public interface BookingDao extends JpaRepository<Booking, Long> {
 
@@ -17,4 +19,6 @@ public interface BookingDao extends JpaRepository<Booking, Long> {
 	int deleteByAadharCardId(Long aadhar_id);
 
 	Optional<Booking> findByAadharCardId(Long aadharId);
+
+	List<Booking> findByCenterId(Long centerId);
 }
