@@ -1,5 +1,4 @@
 package com.app.entities;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class Center extends BaseEntity {
 	@Column(length = 40)
 	private String city;
 	@Column(length = 10, name = "pin_code")
-	private String pinCode;
+	private String pincode;
 	private int stock;
 	@Column(length = 255)
 	private String password;
@@ -39,13 +38,13 @@ public class Center extends BaseEntity {
 	@OneToMany(mappedBy = "center", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<VaccinationRecord> vaccinationRecordList = new ArrayList<>();
 
-	public Center(String name, String state, String district, String city, String pinCode, int stock, String password) {
+	public Center(String name, String state, String district, String city, String pincode, int stock, String password) {
 		super();
 		this.name = name;
 		this.state = state;
 		this.district = district;
 		this.city = city;
-		this.pinCode = pinCode;
+		this.pincode = pincode;
 		this.stock = stock;
 		this.password = password;
 	}

@@ -18,7 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
@@ -44,6 +44,8 @@ public class AadharCard extends BaseEntity {
 	private String pinCode;
 	@OneToOne(mappedBy = "aadharCard")
 	private Citizen citizen;
+	@OneToOne(mappedBy = "aadharCard")
+	private Booking booking;
 	@OneToMany(mappedBy = "aadharCard", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<VaccinationRecord> vaccinationRecordList = new ArrayList<>();
 

@@ -27,7 +27,7 @@ public class CitizenDaoTest {
 		Faker faker = new Faker(new Locale("en-IND"));
 		for (Long i = 0L; i < 50; i++) {
 			AadharCard aadhar = new AadharCard((Long) (i + 1));
-			long phoneNumber = 9000000000L;
+			long phoneNumber = 9090909090L;
 			String formattedNumber = String.format("%010d", phoneNumber+i);
 			Citizen citizen = new Citizen(aadhar, formattedNumber, faker.cat().name());
 			dao.save(citizen);

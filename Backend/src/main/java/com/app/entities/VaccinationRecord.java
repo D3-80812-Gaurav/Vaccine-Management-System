@@ -1,5 +1,7 @@
 package com.app.entities;
 
+import java.time.LocalDate;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,4 +28,5 @@ public class VaccinationRecord extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name = "addhar_id")
 	private AadharCard aadharCard;
+	private LocalDate date;
 }

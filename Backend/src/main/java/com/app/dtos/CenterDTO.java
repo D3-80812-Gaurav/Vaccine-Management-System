@@ -12,6 +12,6 @@ public class CenterDTO {
 	private String state;
 	private String district;
 	private String city;
-	private String pinCode;
+	private String pincode;
 	private int stock;
 }
