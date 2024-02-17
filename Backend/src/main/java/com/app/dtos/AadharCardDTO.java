@@ -73,6 +73,4 @@ public class AadharCardDTO {
 	public void setPinCode(String pinCode) {
 		this.pinCode = pinCode;
 	}
-	
-	
 }

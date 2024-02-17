@@ -10,4 +10,6 @@ public interface CitizenDao extends JpaRepository<Citizen, Long> {
 
 	@Query(nativeQuery = true, value = "select * from citizens where aadhar_id=:aadharId and password=:password")
 	Optional<Citizen> findByAadharAndPassword(Long aadharId, String password);
+
+	Optional<Citizen> findByAadharCardId(Long aadharId);
 }

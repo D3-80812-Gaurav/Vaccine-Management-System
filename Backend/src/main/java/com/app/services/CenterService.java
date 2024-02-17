@@ -3,6 +3,8 @@ package com.app.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.http.ResponseEntity;
+
 import com.app.dtos.CenterDTO;
 import com.app.dtos.NewCenterRegistrationDTO;
 import com.app.entities.Center;
@@ -14,6 +16,8 @@ public interface CenterService {
 	
 	List<Center> findByPinCodeAndStockAvailability(String pincode, int stock);
 
-	boolean addNewCenter(NewCenterRegistrationDTO center);
+	ResponseEntity<String> addNewCenter(NewCenterRegistrationDTO center);
+
+	CenterDTO findByIdAndPassword(Long centerId, String password);
 	
 }

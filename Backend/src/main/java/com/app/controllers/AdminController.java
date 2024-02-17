@@ -37,10 +37,7 @@ public class AdminController {
 	}
 	@PostMapping("/register_new_center")
 	public ResponseEntity<String> addNewCenter(NewCenterRegistrationDTO center){
-		boolean centerAdded =centerService.addNewCenter(center);
-		if(centerAdded)
-			return ResponseEntity.status(HttpStatus.CREATED).body("Center Added Successfully");
-		else
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Unable To Add Center");	
+		ResponseEntity<String> centerAdded =centerService.addNewCenter(center);
+		return centerAdded;	
 	}
 }

@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.custom_exceptions.AadharCardNotFoundException;
@@ -51,7 +52,7 @@ import com.app.entities.VaccinationRecord;
 
 @RestController
 @RequestMapping("/citizen")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @Validated
 public class CitizenController {
 	@Autowired
@@ -71,16 +72,22 @@ public class CitizenController {
 
 	@Autowired
 	ModelMapper mapper;
+	
+	@PostMapping("/signin")
+	public CitizenDTO getCitizenByPhoneNoAndPassword(@RequestBody @Valid CitizenSignInRequest request) {
+		return citizenService.authenticateCitizen(request);
+	}
+	
+//	@PostMapping("/citizen_dashboard")
+//		public CitizenDTO getCitizenById(@RequestBody CitizenSignInRequest request) {
+//		return citizenService.authenticateCitizen(request);
+//	}
+	
 
 	@GetMapping("/centers/{pinCode}")
 	public List<CenterDTO> getCentersByPinCode(@PathVariable String pinCode) {
 		return centerService.findByPinCodeAndStockAvailability(pinCode, 0).stream()
 				.map(center -> mapper.map(center, CenterDTO.class)).collect(Collectors.toList());
-	}
-
-	@PostMapping("/signin")
-	public CitizenDTO getCitizenByPhoneNoAndPassword(@RequestBody @Valid CitizenSignInRequest request) {
-		return citizenService.authenticateCitizen(request);
 	}
 
 	@PostMapping("/centers/book")

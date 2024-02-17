@@ -1,16 +1,18 @@
-import Footer from "./components/Footer";
+
+
 import Navbar from "./components/Navbar";
-import { BrowserRouter } from "react-router-dom/cjs/react-router-dom.min";
-import Launcher from "./components/Launcher";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom/cjs/react-router-dom.min";
+import Home from "./pages/Home"
 
 function App() {
   return (
     <>
-      <BrowserRouter>
+      <Router>
         <Navbar />
-        <Launcher />
-        <Footer />
-      </BrowserRouter>
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+        </Routes>
+      </Router>
     </>
   );
 }
