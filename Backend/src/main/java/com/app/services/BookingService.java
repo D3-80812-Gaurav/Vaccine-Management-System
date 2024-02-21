@@ -10,7 +10,7 @@ import com.app.entities.Center;
 public interface BookingService {
 	boolean bookVaccineSlot(AadharCard aadharCard, Center center);
 
-	void cancelAppointment(Booking booking);
+	Booking cancelAppointment(Booking booking);
 	
 	Booking getBookingByAadharId(Long aadharId);
 

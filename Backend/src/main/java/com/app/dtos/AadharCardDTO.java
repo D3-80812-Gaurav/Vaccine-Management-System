@@ -12,9 +12,7 @@ public class AadharCardDTO {
 	private String firstName;
 	@NotBlank(message = "Last Name Required !")
 	private String lastName;
-	@NotBlank(message = "Date of Birth Required !")
 	private LocalDate dob;
-	@NotBlank(message = "Gender Required !")
 	private Gender gender;
 	@NotBlank(message = "State Required !")
 	private String state;

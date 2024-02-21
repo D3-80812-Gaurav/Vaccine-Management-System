@@ -8,6 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class CenterDTO {
+	private Long id;
 	private String name;
 	private String state;
 	private String district;

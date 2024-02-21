@@ -6,7 +6,7 @@ export default function Navbar() {
     return (
         <div className="container-fluid d-flex flex-column p-0">
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
+                <div className="container-fluid">
                     <Link to="/home" style={{ color: "black", textDecoration: 'none' }}>
                         <div className="ms-3"><img src={logo} alt="Logo" width="24" height="24" className="d-inline-block align-text-top" /></div>
                     </Link>

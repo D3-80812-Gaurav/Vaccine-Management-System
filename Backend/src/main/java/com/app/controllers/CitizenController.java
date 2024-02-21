@@ -33,6 +33,7 @@ import com.app.custom_exceptions.AadharCardNotFoundException;
 import com.app.custom_exceptions.CenterNotFoundException;
 import com.app.custom_exceptions.ResourceNotFoundException;
 import com.app.custom_exceptions.StockNotAvailableException;
+import com.app.dtos.AppointmentDetailsDTO;
 import com.app.dtos.BookVaccineDTO;
 import com.app.dtos.CenterDTO;
 import com.app.dtos.CitizenDTO;
@@ -78,12 +79,11 @@ public class CitizenController {
 		return citizenService.authenticateCitizen(request);
 	}
 	
-//	@PostMapping("/citizen_dashboard")
-//		public CitizenDTO getCitizenById(@RequestBody CitizenSignInRequest request) {
-//		return citizenService.authenticateCitizen(request);
-//	}
+	@GetMapping("/citizen_dashboard/{aadharId}")
+		public CitizenDTO getCitizenById(@PathVariable Long aadharId) {
+		return citizenService.getCitizenByAadharId((aadharId));
+	}
 	
-
 	@GetMapping("/centers/{pinCode}")
 	public List<CenterDTO> getCentersByPinCode(@PathVariable String pinCode) {
 		return centerService.findByPinCodeAndStockAvailability(pinCode, 0).stream()
@@ -105,10 +105,26 @@ public class CitizenController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error Occured While Booking Slot");
 		}
 	}
+	@GetMapping("appointment/{aadharId}")
+	public ResponseEntity<AppointmentDetailsDTO> getAppointmentDetails(@PathVariable Long aadharId){
+		Booking booking=bookingService.getBookingByAadharId(aadharId);
+		String address=new StringBuilder().append(booking.getCenter().getCity())
+				.append(", ")
+				.append(booking.getCenter().getDistrict())
+				.append(", ")
+				.append(booking.getCenter().getState())
+				.append(", PINCODE:")
+				.append(booking.getCenter().getPincode()).toString();
+		AppointmentDetailsDTO appointmentDetails=new AppointmentDetailsDTO(booking.getAadharCard().getFirstName(),
+				booking.getAadharCard().getLastName(),booking.getAadharCard().getId(),booking.getAadharCard().getGender(),
+				booking.getCenter().getName(),address,booking.getDate());
+		return ResponseEntity.status(HttpStatus.OK).body(appointmentDetails);
+	}
+	
 
 	@DeleteMapping("/appointment/cancel")
-	public ResponseEntity<String> cancelAppointment(@RequestBody Long aadharId) {
-		Booking booking = bookingService.getBookingByAadharId(aadharId);
+	public ResponseEntity<String> cancelAppointment(@RequestBody String aadharId) {
+		Booking booking = bookingService.getBookingByAadharId(Long.parseLong(aadharId));
 		bookingService.cancelAppointment(booking);
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body("Cancelled Appointment Successfully");
 	}
@@ -116,8 +132,8 @@ public class CitizenController {
 	@PostMapping("/download_certificate")
 	public ResponseEntity<VaccinationCertificate> downloadCertificate(@RequestBody Long aadharId) {
 		VaccinationCertificate certificate = new VaccinationCertificate();
-		AadharCard card = aadharCardService.findById(aadharId).orElseThrow(() -> new AadharCardNotFoundException());
-		List<VaccinationRecord> listOfRecords = vaccinationRecordService.getVaccinationRecords(aadharId);
+		AadharCard card = aadharCardService.findById((aadharId)).orElseThrow(() -> new AadharCardNotFoundException());
+		List<VaccinationRecord> listOfRecords = vaccinationRecordService.getVaccinationRecords((aadharId));
 		if (listOfRecords.size() == 0)
 			throw new ResourceNotFoundException("Unable to Fetch Certificate As No Vaccination Records Found");
 		else if (listOfRecords.size() == 1)
@@ -127,7 +143,7 @@ public class CitizenController {
 		certificate.setFirstName(card.getFirstName());
 		certificate.setLastName(card.getLastName());
 		certificate.setGender(card.getGender());
-		certificate.setAadharId(aadharId);
+		certificate.setAadharId((aadharId));
 		certificate.setAge((Period.between(card.getDob(), LocalDate.now())).getYears());
 		return ResponseEntity.status(HttpStatus.OK).body(certificate);
 	}

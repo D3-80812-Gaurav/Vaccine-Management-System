@@ -8,11 +8,11 @@ export default function SubNavbar() {
         navigate("/home");
     }
     return (
-        <nav class="navbar navbar-expand-lg bg-white">
-            <div class="container-fluid">
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
+        <nav className="navbar navbar-expand-lg bg-white">
+            <div className="container-fluid">
+                <div className="collapse navbar-collapse" id="navbarNav">
+                    <ul className="navbar-nav">
+                        <li className="nav-item">
                             <button className='btn btn-secondary' onClick={handleLogoutAction}>Logout</button>
                         </li>
                     </ul>

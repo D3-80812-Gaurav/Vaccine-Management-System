@@ -1,41 +1,38 @@
 import React, { useState } from 'react'
-import usersignin from '../images/usersignin.svg';
+import usersignin from '../images/adminlogin.svg';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
-export default function CitizenLogin() {
+export default function CenterLogin() {
     const navigate = useNavigate();
-    const ur = "http://localhost:8080/citizen/signin";
-    const [aadharId, setAddharId] = useState();
+    const ur = "http://localhost:8080/center/login";
+    const [centerId, setCenterId] = useState();
     const [password, setPassword] = useState("");
     const [formErrors, setFormErrors] = useState("");
     const handleSubmit = (e) => {
+        login();
         e.preventDefault();
-        loginCitizen();
-        setAddharId("");
+        setCenterId();
         setPassword("");
     }
 
-    const loginCitizen = async () => {
+    const login = async () => {
         let data = {
-            "aadharID": Number.parseInt(aadharId),
+            "centerId": Number.parseInt(centerId),
             "password": password,
         }
         axios.post(ur, data).then((response) => {
-            sessionStorage.setItem("userDetails", JSON.stringify(response.data));
-            //const a = sessionStorage.getItem("userDetails");
-            navigate('/citizen_dashboard');
-            // console.log(a);
-            // console.log(a.citizenID);
+            //navigate('/admin_dashboard');
             toast.success("Login Successfully");
+            sessionStorage.setItem("centerId", centerId);
+            navigate("/center_dashboard");
         }).catch((error) => {
             console.log(error);
             toast.error("Login Failure !");
         })
     };
-
 
     return (
         <>
@@ -48,9 +45,9 @@ export default function CitizenLogin() {
                             <div className="container border rounded mt-4 shadow">
                                 <form action="submit">
                                     <div className="mb-3">
-                                        <img src={usersignin} style={{ width: 400 }} className="rounded mx-auto d-block my-2"></img>
-                                        <label htmlFor="aadharId" className="form-label">Aadhar Id:</label>
-                                        <input type="number" className="form-control" id="aadharId" placeholder="Aadhar ID" value={aadharId} onChange={(e) => setAddharId(e.target.value)}
+                                        <img src={usersignin} style={{ width: 350 }} className="rounded mx-auto d-block my-2"></img>
+                                        <label htmlFor="name" className="form-label">Center ID:</label>
+                                        <input type="text" className="form-control" id="centerId" placeholder="Enter Center ID" inputmode="numeric" value={centerId} onChange={(e) => setCenterId(e.target.value)}
                                             required />
                                     </div>
                                     <div className="mb-3">

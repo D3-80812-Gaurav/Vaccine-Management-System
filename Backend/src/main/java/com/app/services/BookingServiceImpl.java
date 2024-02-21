@@ -41,11 +41,15 @@ public class BookingServiceImpl implements BookingService {
 
 	@Override
 	@Transactional
-	public void cancelAppointment(Booking booking) {
+	public Booking cancelAppointment(Booking booking) {
 		Center center = booking.getCenter();
 		center.setStock(center.getStock() + 1);
 		centerDao.save(center);
-		bookingDao.deleteByAadharCardId(booking.getAadharCard().getId());
+		Booking deleted=bookingDao.deleteByAadharCardId(booking.getAadharCard().getId());
+		if(deleted!=null)
+			return deleted;
+		else
+			return null;
 	}
 
 	@Override

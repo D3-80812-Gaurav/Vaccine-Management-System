@@ -14,9 +14,9 @@ public interface BookingDao extends JpaRepository<Booking, Long> {
 
 	Optional<Booking> findByAadharCard(AadharCard a);
 
-	@Modifying
-	@Query("delete from Booking b where b.aadharCard.id=:aadhar_id")
-	int deleteByAadharCardId(Long aadhar_id);
+//	@Modifying
+//	@Query("delete from Booking b where b.aadharCard.id=:aadhar_id")
+	Booking deleteByAadharCardId(Long aadhar_id);
 
 	Optional<Booking> findByAadharCardId(Long aadharId);
 
