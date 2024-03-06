@@ -6,13 +6,11 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 import javax.validation.Valid;
 
-import org.apache.catalina.mapper.Mapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +24,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.custom_exceptions.AadharCardNotFoundException;
@@ -110,8 +107,6 @@ public class CitizenController {
 	public ResponseEntity<AppointmentDetailsDTO> getAppointmentDetails(@PathVariable Long aadharId){
 		Booking booking=bookingService.getBookingByAadharId(aadharId);
 		String address=new StringBuilder().append(booking.getCenter().getCity())
-				.append(", ")
-				.append(booking.getCenter().getDistrict())
 				.append(", ")
 				.append(booking.getCenter().getState())
 				.append(", PINCODE:")

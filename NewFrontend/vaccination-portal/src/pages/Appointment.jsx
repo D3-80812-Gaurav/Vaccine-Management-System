@@ -56,7 +56,7 @@ export default function Appointment() {
         document.body.innerHTML = originalContents;
     }
     const handleCancelAppointment = async () => {
-        axios.delete(appointmentCancelURL, { data: aadharID })
+        axios.delete(appointmentCancelURL + aadharID)
             .then((response) => {
                 console.log("Cancelled Successfully");
                 toast.success("Appointment Cancelled Successfully");

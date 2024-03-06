@@ -1,8 +1,11 @@
 import React from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 export default function AppointmentCard(props) {
     const navigate = useNavigate();
+    const appointmentCancelURL = "http://localhost:8080/citizen/appointment/cancel/";
+
     const handleMarkAsVaccinated = () => {
         const centerId = sessionStorage.getItem("centerId");
         let data = JSON.stringify({
@@ -28,10 +31,18 @@ export default function AppointmentCard(props) {
             .catch((error) => {
                 console.log(error);
             });
-
     }
-    const handleCancelAppointment = () => {
-
+    const handleCancelAppointment = async () => {
+        axios.delete(appointmentCancelURL, { data: props.data.aadharId })
+            .then((response) => {
+                console.log("Cancelled Successfully");
+                toast.success("Appointment Cancelled Successfully");
+                navigate("/citizen_dashboard")
+            })
+            .catch((error) => {
+                console.log("Unable to Cancel");
+                toast.warn("An Error Occurred");
+            });
     }
     return (
         <>

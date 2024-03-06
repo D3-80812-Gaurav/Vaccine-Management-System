@@ -30,6 +30,9 @@ export default function Navbar() {
                             <li className="nav-item">
                                 <button className="btn btn-light me-2" ><Link to="/center" style={{ color: "black", textDecoration: 'none' }}>Center Services</Link></button>
                             </li>
+                            <li className="nav-item">
+                                <button className="btn btn-light me-2" ><Link to="/stats" style={{ color: "black", textDecoration: 'none' }}>Statistics</Link></button>
+                            </li>
                         </ul>
                     </div>
                 </div>
