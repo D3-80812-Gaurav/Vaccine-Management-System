@@ -8,10 +8,25 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.app.entities.Admin;
+import com.app.entities.Center;
+import com.app.entities.Citizen;
 import com.app.entities.UserEntity;
 
 public class CustomUserDetails implements UserDetails {
 	UserEntity user;
+	
+	public CustomUserDetails(Citizen citizen) {
+		this.user=citizen;
+	}
+	
+	public CustomUserDetails(Center center) {
+		this.user=center;
+	}
+	
+	public CustomUserDetails(Admin admin) {
+		this.user=admin;
+	}
  
 	public CustomUserDetails(UserEntity user) {
 		super();
@@ -25,8 +40,6 @@ public class CustomUserDetails implements UserDetails {
 	public void setUser(UserEntity user) {
 		this.user = user;
 	}
-
-
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -18,6 +18,10 @@ import lombok.Setter;
 public class Admin extends UserEntity {
 	@Column(length = 20)
 	private String name;
+	
+	{
+		this.role=Role.ADMIN;
+	}
 
 	public Admin(String name,String password) {
 		this.name=name;

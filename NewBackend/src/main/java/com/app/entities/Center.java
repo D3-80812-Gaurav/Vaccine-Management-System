@@ -33,6 +33,10 @@ public class Center extends UserEntity {
 	private List<Booking> bookingList = new ArrayList<>();
 	@OneToMany(mappedBy = "center", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<VaccinationRecord> vaccinationRecordList = new ArrayList<>();
+	
+	{
+		this.role=Role.CITIZEN;
+	}
 
 	public Center(String name, String state, String city, String pincode, int stock) {
 		super();

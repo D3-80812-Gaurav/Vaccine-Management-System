@@ -23,6 +23,10 @@ public class Citizen extends UserEntity {
 	@Column(length = 10)
 	private String phoneNo;
 	
+	{
+		this.role=Role.CITIZEN;
+	}
+	
 	public Citizen(AadharCard aadharCard, String phoneNo, String password) {
 		super(password,Role.CITIZEN);
 		this.aadharCard = aadharCard;

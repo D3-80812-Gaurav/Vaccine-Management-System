@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
@@ -16,6 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -43,17 +47,24 @@ import com.app.services.CitizenService;
 import com.app.services.QRCodeGeneratorService;
 import com.app.services.VaccinationRecordService;
 import com.google.zxing.WriterException;
+
+import antlr.Utils;
+
 import com.app.dtos.VaccinationCertificate;
 import com.app.entities.AadharCard;
 import com.app.entities.Booking;
 import com.app.entities.Center;
 import com.app.entities.VaccinationRecord;
+import com.app.security.JwtUtils;
 
 @RestController
 @RequestMapping("/citizen")
 @CrossOrigin(origins = "*")
 @Validated
 public class CitizenController {
+	
+	@Autowired
+	JwtUtils utils;
 	@Autowired
 	CitizenService citizenService;
 
@@ -72,13 +83,24 @@ public class CitizenController {
 	@Autowired
 	ModelMapper mapper;
 	
+	@Autowired
+	AuthenticationManager mgr;
+	//CH
 	@PostMapping("/signin")
-	public CitizenDTO getCitizenByPhoneNoAndPassword(@RequestBody @Valid CitizenSignInRequest request) {
-		return citizenService.authenticateCitizen(request);
+	public ResponseEntity<?> login(@RequestBody @Valid CitizenSignInRequest request) {
+		//return citizenService.authenticateCitizen(request);
+		Authentication verifiedAuth=mgr.authenticate(new UsernamePasswordAuthenticationToken(request.getAadharID(), request.getPassword()));
+		System.out.println(verifiedAuth.getDetails());
+		System.out.println(verifiedAuth.getAuthorities());
+		if(verifiedAuth.getAuthorities().iterator().next().getAuthority()!="CITIZEN") {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		}
+		return ResponseEntity.ok(utils.generateJwtToken(verifiedAuth));
 	}
 	
 	@GetMapping("/citizen_dashboard/{aadharId}")
 		public CitizenDTO getCitizenById(@PathVariable Long aadharId) {
+		
 		return citizenService.getCitizenByAadharId((aadharId));
 	}
 	
