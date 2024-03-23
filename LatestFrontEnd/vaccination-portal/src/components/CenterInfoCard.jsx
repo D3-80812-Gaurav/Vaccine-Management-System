@@ -7,9 +7,7 @@ export default function CenterInfoCard(props) {
     const { id, name, state, district, city, pincode, stock } = JSON.parse(props.info);
     const centerData = JSON.parse(props.info);
     const handleBookingAction = () => {
-        const data = (JSON.parse(sessionStorage.getItem("userDetails")));
-        sessionStorage.setItem("centerDetails", JSON.parse(JSON.stringify(props.info)));
-        navigate("/book");
+        navigate("/book/" + id);
     }
     return (
         <>

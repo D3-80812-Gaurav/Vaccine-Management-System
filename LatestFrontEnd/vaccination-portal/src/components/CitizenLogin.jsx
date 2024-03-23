@@ -7,33 +7,38 @@ import { useNavigate } from 'react-router-dom';
 
 export default function CitizenLogin() {
     const navigate = useNavigate();
-    const ur = "http://localhost:8080/citizen/signin";
-    const [aadharId, setAddharId] = useState();
+    const baseURL = process.env.REACT_APP_API_URL;
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [formErrors, setFormErrors] = useState("");
     const handleSubmit = (e) => {
         e.preventDefault();
         loginCitizen();
-        setAddharId("");
+        setEmail("");
         setPassword("");
     }
-
     const loginCitizen = async () => {
-        let data = {
-            "aadharID": Number.parseInt(aadharId),
-            "password": password,
-        }
-        axios.post(ur, data).then((response) => {
-            sessionStorage.setItem("userDetails", JSON.stringify(response.data));
-            //const a = sessionStorage.getItem("userDetails");
-            navigate('/citizen_dashboard');
-            // console.log(a);
-            // console.log(a.citizenID);
-            toast.success("Login Successfully");
-        }).catch((error) => {
-            console.log(error);
-            toast.error("Login Failure !");
-        })
+        let data = JSON.stringify({ "email": email, "password": password });
+        console.log(data);
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: baseURL + 'citizen/signin',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+        axios.request(config)
+            .then((response) => {
+                sessionStorage.setItem("vpToken", response.data);
+                toast.success("Login Successful");
+                navigate('/citizen_dashboard');
+            })
+            .catch((error) => {
+                toast.warn("Invalid Credentials");
+                console.log('Response status:', error.response.status);
+                console.log('Response headers:', error.response.headers);
+            });
     };
 
 
@@ -49,8 +54,8 @@ export default function CitizenLogin() {
                                 <form action="submit">
                                     <div className="mb-3">
                                         <img src={usersignin} style={{ width: 400 }} className="rounded mx-auto d-block my-2"></img>
-                                        <label htmlFor="aadharId" className="form-label">Aadhar Id:</label>
-                                        <input type="number" className="form-control" id="aadharId" placeholder="Aadhar ID" value={aadharId} onChange={(e) => setAddharId(e.target.value)}
+                                        <label htmlFor="email" className="form-label">Email ID:</label>
+                                        <input type="email" className="form-control" id="email" placeholder="Enter Email ID" value={email} onChange={(e) => setEmail(e.target.value)}
                                             required />
                                     </div>
                                     <div className="mb-3">

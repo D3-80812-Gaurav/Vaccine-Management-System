@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 export default function SubNavbar() {
     const navigate = useNavigate();
     const handleLogoutAction = () => {
-        sessionStorage.removeItem("userDetails");
+        sessionStorage.removeItem("vpToken");
         navigate("/home");
     }
     return (

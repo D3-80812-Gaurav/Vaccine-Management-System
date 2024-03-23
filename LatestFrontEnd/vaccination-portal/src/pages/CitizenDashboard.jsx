@@ -6,11 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function CitizenDashboard(props) {
     const navigate = useNavigate();
-    const ur = "http://localhost:8080/citizen/citizen_dashboard";
-
-    console.log(sessionStorage.getItem("userDetails"));
-    const data = JSON.parse(sessionStorage.getItem("userDetails"));
-    console.log(data);
+    const baseURL = process.env.REACT_APP_API_URL;
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [aadharID, setAadharID] = useState();
@@ -22,24 +18,33 @@ export default function CitizenDashboard(props) {
     const [hasTakenSecondDose, setHasTakenSecondDose] = useState(false);
 
     const getCitizenDetails = (() => {
-        const data = JSON.parse(sessionStorage.getItem("userDetails"));
-        const aadharID = data.aadharID;
-        axios.get(ur.concat("/" + aadharID)).then((response) => {
-            console.log(JSON.stringify(response.data));
-            const stringifiedData = JSON.stringify(response.data);
-            const jdata = JSON.parse(stringifiedData);
-            setFirstName(jdata.firstName);
-            setLastName(jdata.lastName);
-            setAadharID(jdata.aadharId);
-            setHasBookedFirstDose(jdata.hasBookedFirstDose);
-            setHasBookedSecondDose(jdata.hasBookedSecondDose);
-            setHasReviewedFirstDose(jdata.hasReviewedFirstDose);
-            setHasReviewedSecondDose(jdata.hasReviewedSecondDose);
-            setHasTakenFirstDose(jdata.hasTakenFirstDose);
-            setHasTakenSecondDose(jdata.setHasTakenSecondDose);
-        }).catch((error) => {
-            console.log(error);
-        })
+        const token = sessionStorage.getItem("vpToken");
+        let config = {
+            method: 'get',
+            maxBodyLength: Infinity,
+            url: baseURL + 'citizen/citizen_dashboard',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        };
+
+        axios.request(config)
+            .then((response) => {
+                console.log(JSON.stringify(response.data));
+                const data = response.data;
+                setFirstName(data.firstName);
+                setLastName(data.lastName);
+                setAadharID(data.aadharId);
+                setHasBookedFirstDose(data.hasBookedFirstDose);
+                setHasBookedSecondDose(data.hasBookedSecondDose);
+                setHasReviewedFirstDose(data.hasReviewedFirstDose);
+                setHasReviewedSecondDose(data.hasReviewedSecondDose);
+                setHasTakenFirstDose(data.hasTakenFirstDose);
+                setHasTakenSecondDose(data.setHasTakenSecondDose);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     });
 
     const handleDownloadVaccinationCertificate = (() => {
@@ -69,7 +74,7 @@ export default function CitizenDashboard(props) {
                 <div className="container text-center mt-2">
                     {(hasTakenFirstDose || hasTakenSecondDose) && <>< button className="btn btn-light my-2" onClick={handleDownloadVaccinationCertificate}> Download Certificate</button><br></br></>}
                     {(hasBookedSecondDose || hasBookedFirstDose) && <>< button className="btn btn-light my-2" onClick={handleViewAppointment}> View Appointments</button><br></br></>}
-                    {!(hasBookedSecondDose || hasBookedFirstDose) && <>< button className="btn btn-light my-2" onClick={handleBookSlot}>Book Slot</button><br></br></>}
+                    {!(hasTakenFirstDose || hasTakenSecondDose) && !(hasBookedSecondDose || hasBookedFirstDose) && <>< button className="btn btn-light my-2" onClick={handleBookSlot}>Book Slot</button><br></br></>}
                 </div>
             </div >
         </>

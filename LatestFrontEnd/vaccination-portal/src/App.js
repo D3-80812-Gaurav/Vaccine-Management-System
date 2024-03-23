@@ -30,7 +30,7 @@ function App() {
           <Route path='/appointment_details' element={<Appointment />}></Route>
           <Route path='/book_slot' element={<BookSlot />}></Route>
           <Route path='/faq' element={<FAQ />}></Route>
-          <Route path='/book' element={<BookingWindow />}></Route>
+          <Route path='/book/:id' element={<BookingWindow />}></Route>
           <Route path='/download_certificate' element={<DownloadCertificate />}></Route>
           <Route path='/admin_dashboard' element={<AdminDashboard />}></Route>
           <Route path='/add_center' element={<AddCenter />}></Route>

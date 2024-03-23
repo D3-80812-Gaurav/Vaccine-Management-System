@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import SubNavbar from '../components/SubNavbar'
-import moment from 'moment';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
 export default function DownloadCertificate() {
-    const user = JSON.parse(sessionStorage.getItem("userDetails"));
-    console.log(user.citizenID);
-    const url = "http://localhost:8080/citizen/download_certificate";
+    const baseURL = process.env.REACT_APP_API_URL;
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [age, setAge] = useState();
     const [aadharID, setAadharID] = useState();
     const [gender, setGender] = useState();
     const [vaccinationStatus, setVaccinationStatus] = useState("");
-    const [imageData, setImageData] = useState('');
+    const [imageData, setImageData] = useState(null);
 
     function print() {
         let printContents = document.getElementById('printablediv').innerHTML;
@@ -25,23 +22,21 @@ export default function DownloadCertificate() {
         document.body.innerHTML = originalContents;
     }
     const getCertificate = (() => {
-        let data = JSON.stringify(user.aadharID);
-
+        const token = sessionStorage.getItem("vpToken");
+        const baseURL = process.env.REACT_APP_API_URL;
         let config = {
-            method: 'post',
+            method: 'get',
             maxBodyLength: Infinity,
-            url: 'http://localhost:8080/citizen/download_certificate',
+            url: baseURL + 'citizen/download_certificate',
             headers: {
-                'Content-Type': 'application/json'
-            },
-            data: data
+                'Authorization': 'Bearer ' + token
+            }
         };
 
         axios.request(config)
             .then((response) => {
-                console.log(JSON.stringify(response.data));
                 toast.success("Successfully Received Data");
-                const userData = JSON.parse(JSON.stringify(response.data))
+                const userData = response.data;
                 setFirstName(userData.firstName);
                 setLastName(userData.lastName);
                 setAge(userData.age);
@@ -55,7 +50,28 @@ export default function DownloadCertificate() {
     })
 
     const getQRCode = (() => {
-        //complete it later
+        const token = sessionStorage.getItem("vpToken");
+        let config = {
+            method: 'get',
+            maxBodyLength: Infinity,
+            responseType: 'blob',
+            url: 'http://localhost:8080/api/citizen/generate_qr_code',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        };
+
+        async function makeRequest() {
+            try {
+                const response = await axios.request(config);
+                setImageData(URL.createObjectURL(response.data));
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+
+        makeRequest();
     })
     useEffect(() => {
         getCertificate();
@@ -69,9 +85,8 @@ export default function DownloadCertificate() {
                 <div className="container border rounded w-50 p-3 mt-2">
                     <div id='printablediv'>
                         <h1 className='text-center'>Covid Vaccination Certificate</h1>
-                        <table class="table">
+                        <table class="table ">
                             <tbody>
-                                <tr><u><th className='text-decoration-underline p-2' colSpan={2}>Citizen Details</th></u></tr>
                                 <tr>
                                     <td>Citizen Name :</td>
                                     <td>{firstName} {lastName}</td>
@@ -81,6 +96,10 @@ export default function DownloadCertificate() {
                                     <td>{aadharID}</td>
                                 </tr>
                                 <tr>
+                                    <td>Gender :</td>
+                                    <td>{gender}</td>
+                                </tr>
+                                <tr>
                                     <td>Vaccination Status :</td>
                                     <td>{vaccinationStatus}</td>
                                 </tr>
@@ -88,15 +107,9 @@ export default function DownloadCertificate() {
                                     <td>Age :</td>
                                     <td>{age}</td>
                                 </tr>
-                                <tr id='QR'>
-                                    <td><div>
-                                        {imageData && (
-                                            <img src={`data:image/png;base64,${imageData}`} alt="QR Code" />
-                                        )}
-                                    </div></td>
-                                </tr>
                             </tbody>
                         </table>
+                        <div className='text-center'>{imageData && <img src={imageData} alt="API Image" width={150} />}</div>
                     </div>
                     <div className='text-center'>
                         <button className='btn btn-primary' onClick={print} >Print</button>

@@ -6,7 +6,7 @@ import CenterInfoCard from '../components/CenterInfoCard';
 
 export default function BookSlot() {
     const [pinCode, setPinCode] = useState();
-    const ur = "http://localhost:8080/citizen/centers";
+    const baseURL = process.env.REACT_APP_API_URL;
     const [centers, setCenters] = useState([]);
 
     const handlePinCodeChnage = (e) => {
@@ -14,22 +14,26 @@ export default function BookSlot() {
     }
     const handleSearch = () => {
         setCenters([]);
-        axios.get(ur.concat("/" + pinCode)).then((response) => {
-            console.log(1);
-            console.log(JSON.stringify(response.data));
-            const stringifiedData = JSON.stringify(response.data);
-            console.log(2);
-            console.log(stringifiedData);
-            const jdata = JSON.parse(stringifiedData);
-            console.log(typeof (jdata));
-            jdata.forEach((item, index) => {
-                console.log(index);
-                console.log(JSON.stringify(item));
-                setCenters(centers => [...centers, JSON.stringify(item)]);
+
+        let config = {
+            method: 'get',
+            maxBodyLength: Infinity,
+            url: baseURL + 'center/centers/' + pinCode,
+            headers: {}
+        };
+
+        axios.request(config)
+            .then((response) => {
+                const data = response.data;
+                data.forEach((item, index) => {
+                    console.log(index);
+                    console.log(JSON.stringify(item));
+                    setCenters(centers => [...centers, JSON.stringify(item)]);
+                });
+            })
+            .catch((error) => {
+                console.log(error);
             });
-        }).catch((error) => {
-            console.log(error);
-        })
     }
     return (
         <>

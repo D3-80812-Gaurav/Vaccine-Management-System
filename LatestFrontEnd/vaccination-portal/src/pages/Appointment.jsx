@@ -17,35 +17,39 @@ export default function Appointment() {
     const [centerAddress, setCenterAddress] = useState("");
     const [date, setDate] = useState("");
 
-    const ur = "http://localhost:8080/citizen/appointment/";
-    const appointmentCancelURL = "http://localhost:8080/citizen/appointment/cancel/"
+    const baseURL = process.env.REACT_APP_API_URL;
 
     const getAppointmentDetails = async () => {
-        const data = JSON.parse(sessionStorage.getItem("userDetails"));
-        const aadharID = data.aadharID;
-        axios.get(ur.concat(aadharID)).then((response) => {
-            console.log(JSON.stringify(response.data));
-            const stringifiedData = JSON.stringify(response.data);
-            const jdata = JSON.parse(stringifiedData);
-            setFirstName(jdata.firstName);
-            setLastName(jdata.lastName);
-            setAadharId(jdata.aadharId);
-            setGender(jdata.gender);
-            setCenterName(jdata.centerName);
-            setCenterAddress(jdata.centerAddress);
-            setDate(jdata.date);
-        }).catch((error) => {
-            console.log(error);
-        })
+        const token = sessionStorage.getItem("vpToken");
+        let config = {
+            method: 'get',
+            maxBodyLength: Infinity,
+            url: baseURL + 'citizen/appointment_details',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        };
+
+        axios.request(config)
+            .then((response) => {
+                console.log(JSON.stringify(response.data));
+                const data = response.data;
+                setFirstName(data.firstName);
+                setLastName(data.lastName);
+                setAadharId(data.aadharId);
+                setGender(data.gender);
+                setCenterName(data.centerName);
+                setCenterAddress(data.centerAddress);
+                setDate(data.date);
+
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
     useEffect(() => {
-        const appointment = getAppointmentDetails();
-        console.log("Hello");
-        console.log(appointment);
-        setFirstName(appointment.firstName);
-        setLastName(appointment.lastName);
-        console.log(appointment.lastName);
+        getAppointmentDetails();
     }, [])
 
     const handlePrintAppointment = () => {
@@ -56,15 +60,24 @@ export default function Appointment() {
         document.body.innerHTML = originalContents;
     }
     const handleCancelAppointment = async () => {
-        axios.delete(appointmentCancelURL + aadharID)
+        const token = sessionStorage.getItem("vpToken");
+        let config = {
+            method: 'delete',
+            maxBodyLength: Infinity,
+            url: baseURL + 'citizen/appointment/cancel',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        };
+
+        axios.request(config)
             .then((response) => {
-                console.log("Cancelled Successfully");
+                console.log(JSON.stringify(response.data));
                 toast.success("Appointment Cancelled Successfully");
-                navigate("/citizen_dashboard")
+                navigate("/citizen_dashboard");
             })
             .catch((error) => {
-                console.log("Unable to Cancel");
-                toast.warn("An Error Occurred");
+                console.log(error);
             });
     }
     return (
