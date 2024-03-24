@@ -7,31 +7,38 @@ import { useNavigate } from 'react-router-dom';
 
 export default function CenterLogin() {
     const navigate = useNavigate();
-    const ur = "http://localhost:8080/center/login";
-    const [centerId, setCenterId] = useState();
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [formErrors, setFormErrors] = useState("");
     const handleSubmit = (e) => {
         login();
         e.preventDefault();
-        setCenterId();
+        setEmail("");
         setPassword("");
     }
 
     const login = async () => {
-        let data = {
-            "centerId": Number.parseInt(centerId),
-            "password": password,
-        }
-        axios.post(ur, data).then((response) => {
-            //navigate('/admin_dashboard');
-            toast.success("Login Successfully");
-            sessionStorage.setItem("centerId", centerId);
-            navigate("/center_dashboard");
-        }).catch((error) => {
-            console.log(error);
-            toast.error("Login Failure !");
-        })
+        const baseURL = process.env.REACT_APP_API_URL;
+        let data = JSON.stringify({ "email": email, "password": password });
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: baseURL + 'center/signin',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+
+        axios.request(config)
+            .then((response) => {
+                sessionStorage.setItem("vpCtoken", response.data);
+                navigate("/center_dashboard");
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
     return (
@@ -46,8 +53,8 @@ export default function CenterLogin() {
                                 <form action="submit">
                                     <div className="mb-3">
                                         <img src={usersignin} style={{ width: 350 }} className="rounded mx-auto d-block my-2"></img>
-                                        <label htmlFor="name" className="form-label">Center ID:</label>
-                                        <input type="text" className="form-control" id="centerId" placeholder="Enter Center ID" inputmode="numeric" value={centerId} onChange={(e) => setCenterId(e.target.value)}
+                                        <label htmlFor="email" className="form-label">Email ID:</label>
+                                        <input type="email" className="form-control" id="email" placeholder="Enter Center ID" value={email} onChange={(e) => setEmail(e.target.value)}
                                             required />
                                     </div>
                                     <div className="mb-3">

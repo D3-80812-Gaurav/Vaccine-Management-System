@@ -8,53 +8,53 @@ export default function CenterHeader() {
     const [stock, setStock] = useState(0);
     const navigate = useNavigate();
 
-    const handleLogoutButton = () => {
-        sessionStorage.removeItem("centerId");
-        navigate("/home");
-    }
-
-    useEffect(() => {
-        const centerId = sessionStorage.getItem("centerId");
-
-        let data = JSON.stringify(centerId);
-        let url = "http://localhost:8080/center/" + centerId;
+    const getCenterDetails = () => {
+        const cToken = sessionStorage.getItem("vpCtoken");
+        const baseURL = process.env.REACT_APP_API_URL;
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: url,
+            url: baseURL + 'center/center_dashboard',
             headers: {
-                'Content-Type': 'application/json'
-            },
-            data: data
+                'Authorization': 'Bearer ' + cToken
+            }
         };
 
         axios.request(config)
             .then((response) => {
-                const centerDetails = (response.data);
-                setCenterId(centerDetails.id);
-                setCenterName(centerDetails.name);
-                setStock(centerDetails.stock);
-                console.log(centerDetails.id);
+                const data = response.data
+                setCenterId(data.id);
+                setCenterName(data.name);
+                setStock(data.stock);
             })
             .catch((error) => {
                 console.log(error);
             });
+    }
+
+    const handleLogoutButton = () => {
+        sessionStorage.removeItem("vpCtoken");
+        navigate("/home");
+    }
+
+    useEffect(() => {
+        getCenterDetails();
     }, []);
     return (
-        <div class="card">
-            <div class="card-body">
-                <div class="container text-center">
-                    <div class="row align-items-start">
-                        <div class="col">
+        <div className="card">
+            <div className="card-body">
+                <div className="container text-center">
+                    <div className="row align-items-start">
+                        <div className="col">
                             Center ID: {centerId}
                         </div>
-                        <div class="col">
+                        <div className="col">
                             Center Name: {centerName}
                         </div>
-                        <div class="col">
+                        <div className="col">
                             Available Vaccine Stock: {stock}
                         </div>
-                        <div class="col">
+                        <div className="col">
                             <button className='btn btn-primary btn-sm' onClick={handleLogoutButton}>Logout</button>
                         </div>
                     </div>

@@ -15,6 +15,7 @@ import AddCenter from './pages/AddCenter';
 import RegisterNewAadhar from './pages/RegisterNewAadhar';
 import CenterDashboard from './pages/CenterDashboard';
 import Stats from './pages/Stats';
+import PrintAadharCardWindow from './pages/PrintAadharCardWindow';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path='/add_center' element={<AddCenter />}></Route>
           <Route path='/register_aadhar' element={<RegisterNewAadhar />}></Route>
           <Route path='/center_dashboard' element={<CenterDashboard />}></Route>
+          <Route path='/print_aadhar' element={<PrintAadharCardWindow />}></Route>
           <Route path='/stats' element={<Stats />}></Route>
         </Routes>
       </Router >

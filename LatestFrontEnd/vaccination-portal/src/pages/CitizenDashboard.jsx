@@ -74,7 +74,7 @@ export default function CitizenDashboard(props) {
                 <div className="container text-center mt-2">
                     {(hasTakenFirstDose || hasTakenSecondDose) && <>< button className="btn btn-light my-2" onClick={handleDownloadVaccinationCertificate}> Download Certificate</button><br></br></>}
                     {(hasBookedSecondDose || hasBookedFirstDose) && <>< button className="btn btn-light my-2" onClick={handleViewAppointment}> View Appointments</button><br></br></>}
-                    {!(hasTakenFirstDose || hasTakenSecondDose) && !(hasBookedSecondDose || hasBookedFirstDose) && <>< button className="btn btn-light my-2" onClick={handleBookSlot}>Book Slot</button><br></br></>}
+                    {((hasTakenFirstDose && hasTakenSecondDose) || (hasTakenFirstDose && !hasBookedSecondDose)) && <>< button className="btn btn-light my-2" onClick={handleBookSlot}>Book Slot</button><br></br></>}
                 </div>
             </div >
         </>

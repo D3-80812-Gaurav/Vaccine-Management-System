@@ -7,29 +7,40 @@ import { useNavigate } from 'react-router-dom';
 
 export default function AdminLogin() {
     const navigate = useNavigate();
-    const ur = "http://localhost:8080/admin/login";
-    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [formErrors, setFormErrors] = useState("");
     const handleSubmit = (e) => {
         loginAdmin();
         e.preventDefault();
-        setName("");
+        setEmail("");
         setPassword("");
     }
 
     const loginAdmin = async () => {
-        let data = {
-            "name": name,
-            "password": password,
-        }
-        axios.post(ur, data).then((response) => {
-            navigate('/admin_dashboard');
-            toast.success("Login Successfully");
-        }).catch((error) => {
-            console.log(error);
-            toast.error("Login Failure !");
-        })
+        const baseURL = process.env.REACT_APP_API_URL;
+        let data = JSON.stringify({ "email": email, "password": password });
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: baseURL + 'admin/signin',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+
+        axios.request(config)
+            .then((response) => {
+                sessionStorage.setItem("vpAtoken", response.data);
+                toast.success("Login Successful");
+                navigate("/admin_dashboard");
+            })
+            .catch((error) => {
+                console.log(error);
+                toast.warn("Invalid Credentials");
+            });
     };
 
     return (
@@ -44,8 +55,8 @@ export default function AdminLogin() {
                                 <form action="submit">
                                     <div className="mb-3">
                                         <img src={usersignin} style={{ width: 350 }} className="rounded mx-auto d-block my-2"></img>
-                                        <label htmlFor="name" className="form-label">Name:</label>
-                                        <input type="text" className="form-control" id="name" placeholder="Enter Admin Name" value={name} onChange={(e) => setName(e.target.value)}
+                                        <label htmlFor="email" className="form-label">Admin Email:</label>
+                                        <input type="email" className="form-control" id="email" placeholder="Enter Admin email" value={email} onChange={(e) => setEmail(e.target.value)}
                                             required />
                                     </div>
                                     <div className="mb-3">

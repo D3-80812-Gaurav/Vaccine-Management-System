@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar'
 import { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
+import SubNavbar from '../components/SubNavbar';
 
 export default function RegisterNewAadhar() {
     const url = "http://localhost:8080/admin/register_new_aadhar_card"
@@ -28,26 +29,39 @@ export default function RegisterNewAadhar() {
     }
 
     const addAadharCard = () => {
-        const data = {
-            "firstName": firstName,
-            "lastName": lastName,
-            "dob": dob,
-            "gender": gender,
-            "state": state,
-            "district": district,
-            "city": city,
-            "pinCode": pinCode,
-        }
-        axios.post(url, data).then((response) => {
-            toast.success("Aadhar Registered Successfully");
-        }).catch((error) => {
-            toast.error("Unable to Register Aadhar");
-        })
+        const baseURL = process.env.REACT_APP_API_URL;
+        const vpAtoken = sessionStorage.getItem("vpAtoken");
+        let data = JSON.stringify({ "firstName": firstName, "lastName": lastName, "dob": dob, "gender": gender, "state": state, "city": city, "pinCode": pinCode });
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: baseURL + 'admin/register_new_aadhar_card',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + vpAtoken
+            },
+            data: data
+        };
+
+        axios.request(config)
+            .then((response) => {
+                const res = response.data;
+                const message = "Generated New Aadhar Successfully AadharID:" + res.id;
+                toast(message, {
+                    position: "top-center",
+                    autoClose: false
+                });
+            })
+            .catch((error) => {
+                toast.warn("Something went wrong");
+            });
     }
 
     return (
         <>
             <Navbar />
+            <SubNavbar></SubNavbar>
             <div className="container w-50 border rounded shadow mt-5">
                 <h1 className="text-center pt-2 mb-2">Register New Aadhar</h1>
                 <div className="container text-center mt-2">

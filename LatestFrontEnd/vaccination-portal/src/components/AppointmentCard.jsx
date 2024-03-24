@@ -7,41 +7,45 @@ export default function AppointmentCard(props) {
     const appointmentCancelURL = "http://localhost:8080/citizen/appointment/cancel/";
 
     const handleMarkAsVaccinated = () => {
-        const centerId = sessionStorage.getItem("centerId");
-        let data = JSON.stringify({
-            "aadharCardId": props.data.aadharId,
-            "centerId": centerId
-        });
-
+        const vpCtoken = sessionStorage.getItem("vpCtoken");
+        const baseURL = process.env.REACT_APP_API_URL;
         let config = {
-            method: 'post',
+            method: 'get',
             maxBodyLength: Infinity,
-            url: 'http://localhost:8080/center/mark_as_vaccinated',
+            url: baseURL + 'center/mark_as_vaccinated/' + props.data.aadharId,
             headers: {
-                'Content-Type': 'application/json'
-            },
-            data: data
+                'Authorization': 'Bearer ' + vpCtoken
+            }
         };
 
         axios.request(config)
             .then((response) => {
                 console.log(JSON.stringify(response.data));
-                navigate("/center_dashboard");
+                window.location.reload();
             })
             .catch((error) => {
                 console.log(error);
             });
     }
     const handleCancelAppointment = async () => {
-        axios.delete(appointmentCancelURL, { data: props.data.aadharId })
+        const vpCtoken = sessionStorage.getItem("vpCtoken");
+        const baseURL = process.env.REACT_APP_API_URL;
+        let config = {
+            method: 'delete',
+            maxBodyLength: Infinity,
+            url: baseURL + 'center/appointment/cancel/' + props.data.aadharId,
+            headers: {
+                'Authorization': 'Bearer ' + vpCtoken
+            }
+        };
+
+        axios.request(config)
             .then((response) => {
-                console.log("Cancelled Successfully");
-                toast.success("Appointment Cancelled Successfully");
-                navigate("/citizen_dashboard")
+                console.log(JSON.stringify(response.data));
+                window.location.reload();
             })
             .catch((error) => {
-                console.log("Unable to Cancel");
-                toast.warn("An Error Occurred");
+                console.log(error);
             });
     }
     return (

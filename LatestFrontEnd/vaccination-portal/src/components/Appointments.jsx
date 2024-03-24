@@ -4,64 +4,59 @@ import AppointmentCard from './AppointmentCard';
 import { toast } from 'react-toastify';
 export default function Appointments() {
     const [upcomingAppointments, setUpcomingAppointments] = useState([]);
-    const centerId = sessionStorage.getItem("centerId");
-    console.log(centerId);
     useEffect(() => {
-
-        //const axios = require('axios');
-
+        const baseURL = process.env.REACT_APP_API_URL;
+        const vpCtoken = sessionStorage.getItem("vpCtoken");
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: 'http://localhost:8080/center/appointments/' + centerId,
-            headers: {}
+            url: baseURL + 'center/appointments',
+            headers: {
+                'Authorization': 'Bearer ' + vpCtoken
+            }
         };
 
         axios.request(config)
             .then((response) => {
-                console.log(JSON.stringify(response.data));
                 setUpcomingAppointments([]);
-                console.log(JSON.stringify(response.data));
-                console.log(response.data);
-                const stringifiedData = JSON.stringify(response.data);
-                const jdata = JSON.parse(stringifiedData);
-                jdata.forEach((item, index) => {
-                    console.log(index);
-                    console.log(JSON.stringify(item));
-                    console.log("Hi");
+                const data = response.data;
+                data.forEach((item, index) => {
                     setUpcomingAppointments(upcomingAppointments => [...upcomingAppointments, JSON.stringify(item)]);
                 });
             })
             .catch((error) => {
                 console.log(error);
-                toast.warn("Unable to get Appointment");
             });
     }, []);
     return (
         <>
-            <> < div className='container text-center'>
-                <table class="table table-borderless">
-                    <thead>
-                        <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Aadhar ID</th>
-                            <th scope="col">Mark As Vaccinated</th>
-                            <th scope="col">Cancel Appointment</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {upcomingAppointments.map((app) => {
-                            console.log("Hello");
-                            return <>
+            <>
+                {upcomingAppointments.length == 0 ?
+                    < h3 className='container text-center'>
+                        <h1>You Have No Upcoming Appointments</h1>
+                    </h3>
+                    : < div className='container text-center'>
+                        <table className="table table-borderless">
+                            <thead>
                                 <tr>
-                                    <AppointmentCard data={JSON.parse(app)} />
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Aadhar ID</th>
+                                    <th scope="col">Mark As Vaccinated</th>
+                                    <th scope="col">Cancel Appointment</th>
                                 </tr>
-                            </>
-                        }
-                        )}
-                    </tbody>
-                </table>
-            </div >
+                            </thead>
+                            <tbody>
+                                {upcomingAppointments.map((app, index) => {
+                                    return <>
+                                        <tr>
+                                            <AppointmentCard data={JSON.parse(app)} />
+                                        </tr>
+                                    </>
+                                }
+                                )}
+                            </tbody>
+                        </table>
+                    </div >}
             </>
         </>
     )
