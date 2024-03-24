@@ -55,7 +55,7 @@ export default function DownloadCertificate() {
             method: 'get',
             maxBodyLength: Infinity,
             responseType: 'blob',
-            url: 'http://localhost:8080/api/citizen/generate_qr_code',
+            url: baseURL + 'citizen/generate_qr_code',
             headers: {
                 'Authorization': 'Bearer ' + token
             }
