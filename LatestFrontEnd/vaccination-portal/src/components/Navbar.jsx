@@ -19,16 +19,7 @@ export default function Navbar() {
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav">
                             <li className="nav-item">
-                                <button className="btn btn-light me-2" ><Link to="/citizen_services" style={{ color: "black", textDecoration: 'none' }}>Citizen Services</Link></button>
-                            </li>
-                            <li className="nav-item">
                                 <button className="btn btn-light me-2" ><Link to="/faq" style={{ color: "black", textDecoration: 'none' }}>FAQs</Link></button>
-                            </li>
-                            <li className="nav-item">
-                                <button className="btn btn-light me-2" ><Link to="/admin_services" style={{ color: "black", textDecoration: 'none' }}>Admin Services</Link></button>
-                            </li>
-                            <li className="nav-item">
-                                <button className="btn btn-light me-2" ><Link to="/center" style={{ color: "black", textDecoration: 'none' }}>Center Services</Link></button>
                             </li>
                             <li className="nav-item">
                                 <button className="btn btn-light me-2" ><Link to="/stats" style={{ color: "black", textDecoration: 'none' }}>Statistics</Link></button>
