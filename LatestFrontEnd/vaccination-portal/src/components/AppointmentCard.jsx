@@ -1,11 +1,6 @@
 import React from 'react'
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
 export default function AppointmentCard(props) {
-    const navigate = useNavigate();
-    const appointmentCancelURL = "http://localhost:8080/citizen/appointment/cancel/";
-
     const handleMarkAsVaccinated = () => {
         const vpCtoken = sessionStorage.getItem("vpCtoken");
         const baseURL = process.env.REACT_APP_API_URL;
@@ -20,7 +15,6 @@ export default function AppointmentCard(props) {
 
         axios.request(config)
             .then((response) => {
-                console.log(JSON.stringify(response.data));
                 window.location.reload();
             })
             .catch((error) => {
@@ -41,7 +35,6 @@ export default function AppointmentCard(props) {
 
         axios.request(config)
             .then((response) => {
-                console.log(JSON.stringify(response.data));
                 window.location.reload();
             })
             .catch((error) => {

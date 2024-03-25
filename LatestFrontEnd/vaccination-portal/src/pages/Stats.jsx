@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
 
 export default function Stats() {
     const baseURL = process.env.REACT_APP_API_URL;
-    console.log(baseURL);
     const [totalVaccinations, setTotalVaccinations] = useState();
     const [totalMaleVaccinations, setTotalMaleVaccinations] = useState();
     const [totalFemaleVaccinations, setTotalFemaleVaccinations] = useState();
@@ -57,7 +55,6 @@ export default function Stats() {
                     </div>
                 </div>
             </div>
-            <ToastContainer />
         </>
     )
 }

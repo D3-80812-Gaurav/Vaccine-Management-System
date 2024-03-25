@@ -37,7 +37,6 @@ export default function CitizenRegistration() {
 
         axios.request(config)
             .then((response) => {
-                console.log(JSON.stringify(response.data));
                 setAadharId("");
                 setEmail("");
                 setPhoneNo("");
@@ -90,7 +89,7 @@ export default function CitizenRegistration() {
                                     </div>
                                     {(formErrors.length != 0) ? <h6 className='text-danger text-center'>{formErrors}</h6> : <></>}
                                     <div className="mb-1">
-                                        <div class="d-grid gap-2 text-center">
+                                        <div className="d-grid gap-2 text-center">
                                             <button type="submit" className="btn btn-primary mt-2" onClick={handleSubmit}>Submit</button>
                                             <h6 className='mt-2'>Don't have an account? Visit Nearest PMC Office</h6>
                                         </div>

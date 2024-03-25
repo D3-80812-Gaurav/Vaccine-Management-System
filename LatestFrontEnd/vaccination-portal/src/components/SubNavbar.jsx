@@ -5,6 +5,8 @@ export default function SubNavbar() {
     const navigate = useNavigate();
     const handleLogoutAction = () => {
         sessionStorage.removeItem("vpToken");
+        sessionStorage.removeItem("vpAtoken");
+        sessionStorage.removeItem("vpCtoken");
         navigate("/home");
     }
     return (

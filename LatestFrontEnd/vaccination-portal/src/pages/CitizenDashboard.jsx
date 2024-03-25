@@ -28,7 +28,6 @@ export default function CitizenDashboard(props) {
     }
 
     const canBook = (() => {
-        console.log("In canBook Function" + hasTakenSecondDose);
         if (hasTakenFirstDose && hasTakenSecondDose) {
             return false;
         }
@@ -54,7 +53,6 @@ export default function CitizenDashboard(props) {
 
         axios.request(config)
             .then((response) => {
-                console.log(JSON.stringify(response.data));
                 const data = response.data;
                 setFirstName(data.firstName);
                 setLastName(data.lastName);
@@ -76,7 +74,6 @@ export default function CitizenDashboard(props) {
     })
 
     const handleViewAppointment = (() => {
-        console.log("In Handle View Appointments");
         navigate("/appointment_details");
     });
 

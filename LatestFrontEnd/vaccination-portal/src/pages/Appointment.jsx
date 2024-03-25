@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import { json, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import SubNavbar from '../components/SubNavbar';
 import { toast } from 'react-toastify';
@@ -32,7 +32,6 @@ export default function Appointment() {
 
         axios.request(config)
             .then((response) => {
-                console.log(JSON.stringify(response.data));
                 const data = response.data;
                 setFirstName(data.firstName);
                 setLastName(data.lastName);
@@ -72,7 +71,6 @@ export default function Appointment() {
 
         axios.request(config)
             .then((response) => {
-                console.log(JSON.stringify(response.data));
                 toast.success("Appointment Cancelled Successfully");
                 navigate("/citizen_dashboard");
             })
@@ -86,7 +84,7 @@ export default function Appointment() {
             <SubNavbar></SubNavbar>
             <div className="container mt-5 w-50">
                 <div id='print-table'>
-                    <table class="table table-bordered">
+                    <table className="table table-bordered">
                         <thead>
                             <tr>
                                 <td colSpan={2}>

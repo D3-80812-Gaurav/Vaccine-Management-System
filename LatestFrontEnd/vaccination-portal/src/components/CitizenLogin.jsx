@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -20,7 +20,6 @@ export default function CitizenLogin() {
     }
     const loginCitizen = async () => {
         let data = JSON.stringify({ "email": email, "password": password });
-        console.log(data);
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
@@ -37,9 +36,7 @@ export default function CitizenLogin() {
                 navigate('/citizen_dashboard');
             })
             .catch((error) => {
-                toast.warn("Invalid Credentials");
-                console.log('Response status:', error.response.status);
-                console.log('Response headers:', error.response.headers);
+                toast.warn("Login Failed");
             });
     };
 
@@ -66,7 +63,7 @@ export default function CitizenLogin() {
                                             required />
                                     </div>
                                     <div className="mb-3">
-                                        <div class="d-grid gap-2 text-center">
+                                        <div className="d-grid gap-2 text-center">
                                             <button type="submit" className="btn btn-primary mt-2" onClick={handleSubmit}>Submit</button>
                                             <h6 className='mt-2'>Don't have an account? <Link to="/citizen_registration">Register Here</Link></h6>
                                         </div>
@@ -80,7 +77,6 @@ export default function CitizenLogin() {
                 </div >
             </div >
             <Footer></Footer>
-            <ToastContainer />
         </>
     )
 }

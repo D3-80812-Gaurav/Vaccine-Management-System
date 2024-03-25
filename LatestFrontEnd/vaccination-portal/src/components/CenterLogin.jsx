@@ -1,16 +1,15 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
+import { toast } from 'react-toastify';
 
 export default function CenterLogin() {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [formErrors, setFormErrors] = useState("");
     const handleSubmit = (e) => {
         login();
         e.preventDefault();
@@ -35,9 +34,11 @@ export default function CenterLogin() {
         axios.request(config)
             .then((response) => {
                 sessionStorage.setItem("vpCtoken", response.data);
+                toast.success("Login Successful");
                 navigate("/center_dashboard");
             })
             .catch((error) => {
+                toast.warn("Login Failed");
                 console.log(error);
             });
     };
@@ -64,7 +65,7 @@ export default function CenterLogin() {
                                             required />
                                     </div>
                                     <div className="mb-3">
-                                        <div class="d-grid gap-2 text-center">
+                                        <div className="d-grid gap-2 text-center">
                                             <button type="submit" className="btn btn-primary mt-2" onClick={handleSubmit}>Submit</button>
                                             <h6 className='mt-2'>Not Center Admin? Go to <Link to="/citizen_services">Citizen Login</Link></h6>
                                         </div>
@@ -78,7 +79,6 @@ export default function CenterLogin() {
                 </div >
             </div >
             <Footer></Footer>
-            <ToastContainer />
         </>
     )
 }

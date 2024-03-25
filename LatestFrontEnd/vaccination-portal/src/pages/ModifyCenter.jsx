@@ -31,7 +31,6 @@ export default function ModifyCenter() {
                 setPincode(res.pincode);
             })
             .catch((error) => {
-                console.log("Nahi Aaya");
                 setId();
                 setName("");
                 setState("");
@@ -58,7 +57,6 @@ export default function ModifyCenter() {
 
         axios.request(config)
             .then((response) => {
-                console.log(JSON.stringify(response.data));
                 setCenterId("");
                 setId("");
                 setName("");
@@ -97,9 +95,9 @@ export default function ModifyCenter() {
             <div className="container  w-50">
                 <div className="container text-center mt-2  ">
                     <h2 className='mb-3'>Update Center Details</h2>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="text" placeholder="Enter Center ID:" required value={centerId} onChange={(e) => setCenterId(e.target.value)} />
-                        <button class="btn btn-outline-success" type="button" onClick={handleSearch}>Search</button>
+                    <form className="d-flex">
+                        <input className="form-control me-2" type="text" placeholder="Enter Center ID:" required value={centerId} onChange={(e) => setCenterId(e.target.value)} />
+                        <button className="btn btn-outline-success" type="button" onClick={handleSearch}>Search</button>
                     </form>
                 </div>
                 {(name.length == 0) &&
@@ -112,22 +110,22 @@ export default function ModifyCenter() {
                         <>
                             <div className="container bg-light mb-3 border shadow rounded mt-3">
                                 <form>
-                                    <input class="form-control" type="text" value={id} id='centerId' readonly hidden="true" />
+                                    <input className="form-control" type="text" value={id} id='centerId' readonly hidden="true" />
 
-                                    <label for="centerName" class="form-label fw-bold mx-2 mt-3">Center Name</label>
-                                    <input class="form-control" type="text" value={name} id='centerName' onChange={(e) => setName(e.target.value)} required />
+                                    <label for="centerName" className="form-label fw-bold mx-2 mt-3">Center Name</label>
+                                    <input className="form-control" type="text" value={name} id='centerName' onChange={(e) => setName(e.target.value)} required />
 
-                                    <label for="city" class="form-label mx-2">Center City</label>
-                                    <input class="form-control" type="text" value={city} id='city' onChange={(e) => setCity(e.target.value)} required />
+                                    <label for="city" className="form-label mx-2">Center City</label>
+                                    <input className="form-control" type="text" value={city} id='city' onChange={(e) => setCity(e.target.value)} required />
 
-                                    <label for="state" class="form-label mx-2">Center State</label>
-                                    <input class="form-control" type="text" value={state} id='state' onChange={(e) => setState(e.target.value)} required />
+                                    <label for="state" className="form-label mx-2">Center State</label>
+                                    <input className="form-control" type="text" value={state} id='state' onChange={(e) => setState(e.target.value)} required />
 
-                                    <label for="pincode" class="form-label mx-2">Center Pincode</label>
-                                    <input class="form-control" type="text" value={pincode} id='pincode' onChange={(e) => setPincode(e.target.value)} required />
+                                    <label for="pincode" className="form-label mx-2">Center Pincode</label>
+                                    <input className="form-control" type="text" value={pincode} id='pincode' onChange={(e) => setPincode(e.target.value)} required />
 
-                                    <label for="stock" class="form-label mx-2">Center Vaccine Stock</label>
-                                    <input class="form-control" type="number" value={stock} id='stock' min="0" onChange={(e) => setStock(e.target.value)} required />
+                                    <label for="stock" className="form-label mx-2">Center Vaccine Stock</label>
+                                    <input className="form-control" type="number" value={stock} id='stock' min="0" onChange={(e) => setStock(e.target.value)} required />
                                     {errorMsg.length != 0 && (<h6 className='text-center text-danger mt-2'>{errorMsg}</h6>)}
                                     <button className='btn btn-primary mt-2 mb-3' type='submit' onClick={handleSubmitAction}>Update Center Details</button>
                                 </form>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import AppointmentCard from './AppointmentCard';
-import { toast } from 'react-toastify';
 export default function Appointments() {
     const [upcomingAppointments, setUpcomingAppointments] = useState([]);
     useEffect(() => {
@@ -20,7 +19,7 @@ export default function Appointments() {
             .then((response) => {
                 setUpcomingAppointments([]);
                 const data = response.data;
-                data.forEach((item, index) => {
+                data.forEach((item) => {
                     setUpcomingAppointments(upcomingAppointments => [...upcomingAppointments, JSON.stringify(item)]);
                 });
             })
@@ -32,8 +31,8 @@ export default function Appointments() {
         <>
             <>
                 {upcomingAppointments.length == 0 ?
-                    < h3 className='container text-center'>
-                        <h1>You Have No Upcoming Appointments</h1>
+                    < h3 className='container text-center mt-2'>
+                        <h2>You Have No Upcoming Appointments</h2>
                     </h3>
                     : < div className='container text-center'>
                         <table className="table table-borderless">

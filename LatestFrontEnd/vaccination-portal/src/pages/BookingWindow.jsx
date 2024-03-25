@@ -9,7 +9,6 @@ import { toast } from 'react-toastify';
 export default function BookingWindow(props) {
     const navigate = useNavigate();
     let { id } = useParams();
-    console.log(props);
     const baseURL = process.env.REACT_APP_API_URL;
     const [date, setDate] = useState("");
     const [centerId, setCenterId] = useState("");
@@ -47,12 +46,13 @@ export default function BookingWindow(props) {
     }
 
     const bookAppointment = () => {
+        const baseURL = process.env.REACT_APP_API_URL;
         let data = JSON.stringify({ "centerId": centerId, "date": date });
         const token = sessionStorage.getItem("vpToken");
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'http://localhost:8080/api/citizen/centers/book',
+            url: baseURL + 'citizen/centers/book',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token
@@ -80,14 +80,14 @@ export default function BookingWindow(props) {
             <div>
                 <div className="container w-50">
                     <form>
-                        <input class="form-control" type="text" value={centerId} aria-label="readonly input example" id='centerId' readonly hidden="true" />
-                        <input class="form-control" type="text" value={123} aria-label="readonly input example" id='aadharId' readonly hidden="true" />
-                        <label for="centerName" class="form-label mx-2">Center Name</label>
-                        <input class="form-control" type="text" value={centerName} aria-label="readonly input example" id='centerName' readonly disabled="true" />
-                        <label for="centerAddress" class="form-label mx-2">Center Address</label>
-                        <input class="form-control" type="text" value={city + ", " + state + ", " + pincode} aria-label="readonly input example" readonly id='centerAddress' disabled="true" />
-                        <label for="date" class="form-label mx-2">Choose A Date</label>
-                        <input type="date" aria-label="Last name" class="form-control" id='date' required value={date} onChange={handleDateChangeEvent} />
+                        <input className="form-control" type="text" value={centerId} aria-label="readonly input example" id='centerId' readonly hidden="true" />
+                        <input className="form-control" type="text" value={123} aria-label="readonly input example" id='aadharId' readonly hidden="true" />
+                        <label for="centerName" className="form-label mx-2">Center Name</label>
+                        <input className="form-control" type="text" value={centerName} aria-label="readonly input example" id='centerName' readonly disabled="true" />
+                        <label for="centerAddress" className="form-label mx-2">Center Address</label>
+                        <input className="form-control" type="text" value={city + ", " + state + ", " + pincode} aria-label="readonly input example" readonly id='centerAddress' disabled="true" />
+                        <label for="date" className="form-label mx-2">Choose A Date</label>
+                        <input type="date" aria-label="Last name" className="form-control" id='date' required value={date} onChange={handleDateChangeEvent} />
                         <button className='btn btn-primary mt-2' type='submit' onClick={handleSubmitHandleAction}>Book Slot</button>
                     </form>
                 </div >

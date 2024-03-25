@@ -27,7 +27,6 @@ export default function BookSlot() {
                 const data = response.data;
                 data.forEach((item, index) => {
                     console.log(index);
-                    console.log(JSON.stringify(item));
                     setCenters(centers => [...centers, JSON.stringify(item)]);
                 });
             })
@@ -41,9 +40,9 @@ export default function BookSlot() {
             <SubNavbar></SubNavbar>
             <div className="container w-50">
                 <div className="container text-center mt-2  ">
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="text" placeholder="Search Your Nearest Center By Entering Your PINCODE" required value={pinCode} onChange={handlePinCodeChnage} min={100000} max={999999} inputMode='numeric' />
-                        <button class="btn btn-outline-success" type="button" onClick={handleSearch}>Search</button>
+                    <form className="d-flex">
+                        <input className="form-control me-2" type="text" placeholder="Search Your Nearest Center By Entering Your PINCODE" required value={pinCode} onChange={handlePinCodeChnage} min={100000} max={999999} inputMode='numeric' />
+                        <button className="btn btn-outline-success" type="button" onClick={handleSearch}>Search</button>
                     </form>
                 </div>
                 {centers.length === 0 &&

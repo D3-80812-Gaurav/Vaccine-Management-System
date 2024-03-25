@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -10,7 +10,6 @@ export default function AdminLogin() {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [formErrors, setFormErrors] = useState("");
     const handleSubmit = (e) => {
         loginAdmin();
         e.preventDefault();
@@ -66,7 +65,7 @@ export default function AdminLogin() {
                                             required />
                                     </div>
                                     <div className="mb-3">
-                                        <div class="d-grid gap-2 text-center">
+                                        <div className="d-grid gap-2 text-center">
                                             <button type="submit" className="btn btn-primary mt-2" onClick={handleSubmit}>Submit</button>
                                             <h6 className='mt-2'>Not Admin? Go to <Link to="/citizen_services">Citizen Login</Link></h6>
                                         </div>
@@ -80,7 +79,6 @@ export default function AdminLogin() {
                 </div >
             </div >
             <Footer></Footer>
-            <ToastContainer />
         </>
     )
 }

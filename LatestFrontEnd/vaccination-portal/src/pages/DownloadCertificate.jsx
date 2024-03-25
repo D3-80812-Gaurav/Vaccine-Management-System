@@ -85,7 +85,7 @@ export default function DownloadCertificate() {
                 <div className="container border rounded w-50 p-3 mt-2">
                     <div id='printablediv'>
                         <h1 className='text-center'>Covid Vaccination Certificate</h1>
-                        <table class="table ">
+                        <table className="table ">
                             <tbody>
                                 <tr>
                                     <td>Citizen Name :</td>
