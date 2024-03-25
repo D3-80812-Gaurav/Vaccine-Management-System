@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import usersignin from '../images/adminlogin.svg';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import Footer from './Footer';
 
 export default function CenterLogin() {
     const navigate = useNavigate();
@@ -43,18 +44,18 @@ export default function CenterLogin() {
 
     return (
         <>
-            <div className="container container-fluid">
+            <div className="container container-fluid mt-5">
                 <div className="container">
                     <div className="row">
                         <div className="col">
                         </div>
                         <div className="col">
-                            <div className="container border rounded mt-4 shadow">
+                            <div className="container border rounded mt-4 shadow p-3">
                                 <form action="submit">
                                     <div className="mb-3">
-                                        <img src={usersignin} style={{ width: 350 }} className="rounded mx-auto d-block my-2"></img>
+                                        <div className="text-center mt-2 fw-bolder"><h1>Center Sign In</h1></div>
                                         <label htmlFor="email" className="form-label">Email ID:</label>
-                                        <input type="email" className="form-control" id="email" placeholder="Enter Center ID" value={email} onChange={(e) => setEmail(e.target.value)}
+                                        <input type="email" className="form-control" id="email" placeholder="example@example.com" value={email} onChange={(e) => setEmail(e.target.value)}
                                             required />
                                     </div>
                                     <div className="mb-3">
@@ -63,8 +64,10 @@ export default function CenterLogin() {
                                             required />
                                     </div>
                                     <div className="mb-3">
-                                        <button type="submit" className="btn btn-primary mb-3 me-2" onClick={handleSubmit}>Submit</button>
-                                        <button type="reset" className="btn btn-primary mb-3">Reset</button>
+                                        <div class="d-grid gap-2 text-center">
+                                            <button type="submit" className="btn btn-primary mt-2" onClick={handleSubmit}>Submit</button>
+                                            <h6 className='mt-2'>Not Center Admin? Go to <Link to="/citizen_services">Citizen Login</Link></h6>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -72,8 +75,9 @@ export default function CenterLogin() {
                         <div className="col">
                         </div>
                     </div>
-                </div>
-            </div>
+                </div >
+            </div >
+            <Footer></Footer>
             <ToastContainer />
         </>
     )

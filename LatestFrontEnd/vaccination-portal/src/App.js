@@ -17,33 +17,36 @@ import CenterDashboard from './pages/CenterDashboard';
 import Stats from './pages/Stats';
 import PrintAadharCardWindow from './pages/PrintAadharCardWindow';
 import ModifyCenter from './pages/ModifyCenter';
+import CitizenRegistration from './pages/CitizenRegistration';
 
 function App() {
   return (
     <>
-      <Router>
-        <Routes>
-          <Route index element={<Home />}></Route>
-          <Route path='/home' element={<Home />}></Route>
-          <Route path='/center' element={<CenterSignIn />}></Route>
-          <Route path='/admin_services' element={<AdminServices />}></Route>
-          <Route path='/citizen_services' element={<CitizenServices />}></Route>
-          <Route path='/citizen_dashboard' element={<CitizenDashboard />}></Route>
-          <Route path='/appointment_details' element={<Appointment />}></Route>
-          <Route path='/book_slot' element={<BookSlot />}></Route>
-          <Route path='/faq' element={<FAQ />}></Route>
-          <Route path='/book/:id' element={<BookingWindow />}></Route>
-          <Route path='/download_certificate' element={<DownloadCertificate />}></Route>
-          <Route path='/admin_dashboard' element={<AdminDashboard />}></Route>
-          <Route path='/add_center' element={<AddCenter />}></Route>
-          <Route path='/register_aadhar' element={<RegisterNewAadhar />}></Route>
-          <Route path='/center_dashboard' element={<CenterDashboard />}></Route>
-          <Route path='/print_aadhar' element={<PrintAadharCardWindow />}></Route>
-          <Route path='/modify_center' element={<ModifyCenter />}></Route>
-          <Route path='/stats' element={<Stats />}></Route>
-        </Routes>
-      </Router >
-      <ToastContainer limit={1} />
+      <ToastContainer limit={1}>
+        <Router>
+          <Routes>
+            <Route index element={<Home />}></Route>
+            <Route path='/home' element={<Home />}></Route>
+            <Route path='/center' element={<CenterSignIn />}></Route>
+            <Route path='/admin_services' element={<AdminServices />}></Route>
+            <Route path='/citizen_services' element={<CitizenServices />}></Route>
+            <Route path='/citizen_dashboard' element={<CitizenDashboard />}></Route>
+            <Route path='/appointment_details' element={<Appointment />}></Route>
+            <Route path='/book_slot' element={<BookSlot />}></Route>
+            <Route path='/faq' element={<FAQ />}></Route>
+            <Route path='/book/:id' element={<BookingWindow />}></Route>
+            <Route path='/download_certificate' element={<DownloadCertificate />}></Route>
+            <Route path='/admin_dashboard' element={<AdminDashboard />}></Route>
+            <Route path='/add_center' element={<AddCenter />}></Route>
+            <Route path='/register_aadhar' element={<RegisterNewAadhar />}></Route>
+            <Route path='/center_dashboard' element={<CenterDashboard />}></Route>
+            <Route path='/print_aadhar' element={<PrintAadharCardWindow />}></Route>
+            <Route path='/modify_center' element={<ModifyCenter />}></Route>
+            <Route path='/citizen_registration' element={<CitizenRegistration />}></Route>
+            <Route path='/stats' element={<Stats />}></Route>
+          </Routes>
+        </Router >
+      </ToastContainer >
     </>
   );
 }
