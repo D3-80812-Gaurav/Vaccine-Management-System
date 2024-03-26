@@ -2,13 +2,36 @@
 
 The Vaccination Management System is a web application designed to streamline the process of vaccination appointments, administration, and management. It provides functionalities for citizens to schedule appointments, view their appointments, cancel appointments, download vaccination certificates, and for administrators to manage vaccination centers, appointments, and citizen data.
 
+## Technologies Used
+
+### Backend
+
+- Java 8
+- Spring Boot
+- Spring Security
+
+### Frontend
+
+- React
+- HTML,CSS,JavaScript
+- Libararies: Bootstrap 5, react-toastify, moment, dotenv
+
+### Database
+
+- MySQL 8
+
+### Testing
+
+- JUnit
+- JavaFaker
+
 ## Installation
 
 To install the frontend, use npm:
 
 npm install
 
-To run the backend, install it as a Spring Boot application.
+To run the backend, install it as a Spring Boot application, for intial setup please run application src\test\java\com\app\dao\ApplicationTest.java which will add some sample data in database for your convenience
 
 ## Usage
 
