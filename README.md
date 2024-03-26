@@ -51,6 +51,9 @@ To run the backend, install it as a Spring Boot application.
 - **Centre Dashboard**:
 ![Centre Dashboard](https://github.com/D3-80812-Gaurav/Vaccine-Management-System/blob/main/Screenshots/CenterDashboard.png)
 
+- **Centre Dashboard 2**:
+![Centre Dashboard 2](https://github.com/D3-80812-Gaurav/Vaccine-Management-System/blob/main/Screenshots/CenterDashboard2.png)
+
 ## Admin Screenshots
 - **Admin Dashboard**:
 ![Admin Dashboard](https://github.com/D3-80812-Gaurav/Vaccine-Management-System/blob/main/Screenshots/AdminDashboard.png)
@@ -63,6 +66,9 @@ To run the backend, install it as a Spring Boot application.
 
 - **Aadhaar Card Search**:
 ![Aadhaar Card Search](https://github.com/D3-80812-Gaurav/Vaccine-Management-System/blob/main/Screenshots/AadharCardSearch.png)
+
+- **Register New Aadhar**:
+![Register New Aadhar](https://github.com/D3-80812-Gaurav/Vaccine-Management-System/blob/main/Screenshots/RegisterAadhar.png)
 
 ## Misc and UI
 
