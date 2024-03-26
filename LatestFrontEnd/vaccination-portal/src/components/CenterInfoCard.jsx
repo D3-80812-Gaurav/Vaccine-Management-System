@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function CenterInfoCard(props) {
     const navigate = useNavigate();
-    const { id, name, state, district, city, pincode, stock } = JSON.parse(props.info);
-    const centerData = JSON.parse(props.info);
+    const { id, name, state, district, city, pincode } = JSON.parse(props.info);
     const handleBookingAction = () => {
         navigate("/book/" + id);
     }

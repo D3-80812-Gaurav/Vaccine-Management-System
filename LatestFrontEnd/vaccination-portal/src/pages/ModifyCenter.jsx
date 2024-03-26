@@ -94,7 +94,7 @@ export default function ModifyCenter() {
 
             <div className="container  w-50">
                 <div className="container text-center mt-2  ">
-                    <h2 className='mb-3'>Update Center Details</h2>
+                    <h2 className='mb-3 fw-bolder'>Update Center Details</h2>
                     <form className="d-flex">
                         <input className="form-control me-2" type="text" placeholder="Enter Center ID:" required value={centerId} onChange={(e) => setCenterId(e.target.value)} />
                         <button className="btn btn-outline-success" type="button" onClick={handleSearch}>Search</button>
