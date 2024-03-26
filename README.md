@@ -24,6 +24,8 @@ The Vaccination Management System is a web application designed to streamline th
 
 - JUnit
 - JavaFaker
+- SwaggerUI
+- Postman
 
 ## Installation
 
